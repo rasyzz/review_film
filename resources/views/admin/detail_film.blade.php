@@ -261,24 +261,24 @@
                     <!-- Rating Section -->
                     <div class="rating1 flex flex-col items-center space-y-4 mb-2">
                         <div class="rating flex flex-wrap justify-center gap-x-2 sm:gap-x-4">
-                            <input type="radio" name="rating" id="star5" value="5" class="hidden">
-                            <label for="star5"
-                                class="cursor-pointer text-gray-400 text-4xl sm:text-6xl md:text-7xl">&#9733;</label>
-
-                            <input type="radio" name="rating" id="star4" value="4" class="hidden">
-                            <label for="star4"
-                                class="cursor-pointer text-gray-400 text-4xl sm:text-6xl md:text-7xl">&#9733;</label>
-
-                            <input type="radio" name="rating" id="star3" value="3" class="hidden">
-                            <label for="star3"
+                            <input type="radio" name="rating" id="star1" value="1" class="hidden">
+                            <label for="star1"
                                 class="cursor-pointer text-gray-400 text-4xl sm:text-6xl md:text-7xl">&#9733;</label>
 
                             <input type="radio" name="rating" id="star2" value="2" class="hidden">
                             <label for="star2"
                                 class="cursor-pointer text-gray-400 text-4xl sm:text-6xl md:text-7xl">&#9733;</label>
 
-                            <input type="radio" name="rating" id="star1" value="1" class="hidden">
-                            <label for="star1"
+                            <input type="radio" name="rating" id="star3" value="3" class="hidden">
+                            <label for="star3"
+                                class="cursor-pointer text-gray-400 text-4xl sm:text-6xl md:text-7xl">&#9733;</label>
+
+                            <input type="radio" name="rating" id="star4" value="4" class="hidden">
+                            <label for="star4"
+                                class="cursor-pointer text-gray-400 text-4xl sm:text-6xl md:text-7xl">&#9733;</label>
+
+                            <input type="radio" name="rating" id="star5" value="5" class="hidden">
+                            <label for="star5"
                                 class="cursor-pointer text-gray-400 text-4xl sm:text-6xl md:text-7xl">&#9733;</label>
                         </div>
                     </div>
