@@ -40,9 +40,8 @@
             <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden mb-10">
                 <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th class="py-3 px-6 text-left">Id</th>
-                        <th class="py-3 px-6 text-left">Title</th>
                         <th class="py-3 px-6 text-left">Poster</th>
+                        <th class="py-3 px-6 text-left">Title</th>
                         <th class="py-3 px-6 text-left">Tahun Rilis</th>
                         <th class="py-3 px-6 text-left">Sutradara</th>
                         <th class="py-3 px-6 text-center">Aksi</th>
@@ -51,8 +50,6 @@
                 <tbody class="divide-y divide-gray-200">
                     @foreach ($films as $item)
                         <tr class="hover:bg-gray-100">
-                            <td class="py-4 px-6">{{ $item->id_film }}</td>
-                            <td class="py-4 px-6">{{ $item->title }}</td>
                             <td class="py-4 px-6">
                                 @if ($item->poster)
                                     <img src="{{ asset('storage/' . $item->poster) }}" alt="Poster" width="50">
@@ -60,7 +57,7 @@
                                     <span>No Image</span>
                                 @endif
                             </td>
-
+                            <td class="py-4 px-6">{{ $item->title }}</td>
                             <td class="py-4 px-6">{{ $item->release_year }}</td>
                             <td class="py-4 px-6">{{ $item->creator }}</td>
                             <td class="py-4 px-6 flex justify-center items-center space-x-3">

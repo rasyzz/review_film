@@ -38,17 +38,15 @@
             <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden mb-10">
                 <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th class="py-3 px-6 text-left">No</th>
                         <th class="py-3 px-6 text-left">Nama Panggung</th>
                         <th class="py-3 px-6 text-left">Nama Asli</th>
-                        <th class="py-3 px-6 text-left">Id Film</th>
+                        <th class="py-3 px-6 text-left">Film</th>
                         <th class="py-3 px-6 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 ">
                     @foreach ($casting as $item)
                         <tr class="hover:bg-gray-100">
-                            <td class="py-4 px-6">{{ $item->id_castings }}</td>
                             <td class="py-4 px-6">{{ $item->stage_name }}</td>
                             <td class="py-4 px-6">{{ $item->real_name }}</td>
                             <td class="py-4 px-6">{{ $item->film->title }}</td>

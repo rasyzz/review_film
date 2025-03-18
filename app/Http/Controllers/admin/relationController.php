@@ -16,12 +16,10 @@ class relationController extends Controller
     public function index()
     {
 
-        $gl = genre_relation::with(['film', 'genre'])
-            ->get()
-            ->groupBy('film.title');
-
+        $gl = genre_relation::with(['film', 'genre'])->get()->groupBy('film.title');
         $genre = Genre::all();
         $film = film::all();
+        
 
         return view('admin.relasi.index', compact('film', 'genre', 'gl',));
     }
@@ -83,8 +81,6 @@ class relationController extends Controller
 
         return view('admin.relasi.update', compact('film', 'filmList', 'genre', 'selectedGenres'));
     }
-
-
 
 
     /**

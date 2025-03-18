@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Movies</title>
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
 </head>
 
 <body class="bg-gray-900">
-    @include('sidebar-navbar-admin.navbar')
+    @include('navbar-anonymous.navbar')
     <div class="flex items-center justify-between mt-35 md:mt-40 bg-gray-900">
         <!-- Judul Movies -->
         <h2 class="text-2xl text-left ml-3 md:ml-8 text-white font-bold inline-block bg-blue-950 rounded-lg p-2">

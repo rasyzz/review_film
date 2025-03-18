@@ -14,11 +14,11 @@ class genre_relation extends Model
 
     public function film()
     {
-        return $this->belongsTo(Film::class, 'id_film','id_film');
+        return $this->belongsTo(Film::class, 'id_film');
     }
 
     public function genre()
     {
-        return $this->belongsTo(Genre::class, 'id_genre','id_genre');
+        return $this->belongsTo(Genre::class, 'id_genre');
     }
 }

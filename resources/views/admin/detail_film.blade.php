@@ -8,69 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <title>{{ $film->title }}</title>
+    <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
     <style>
-        .container {
-            display: flex;
-            max-width: 600%;
-        }
-
-
-        .poster {
-            padding: 10px;
-            flex: 1;
-            margin-right: 0px;
-        }
-
-        .poster img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .details {
-            flex: 2;
-            margin-left: 20px;
-        }
-
-        .title {
-            font-size: 2em;
-            font-weight: 700;
-        }
-
-
-
-        .rating {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-        }
-
-        .rating .score {
-            background-color: #1db954;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2em;
-            font-weight: 700;
-            margin-right: 10px;
-        }
-
-        .rating .text {
-            font-size: 1em;
-        }
-
-
-
-        .description {
-            margin-bottom: 20px;
-            font-size: 1em;
-            color: #cccccc;
-        }
-
-
-
         /* Background Overlay */
         .background-overlay {
             background-image: url("{{ asset('storage/' . $film->poster) }}");
@@ -81,28 +20,6 @@
             padding: 7px;
         }
 
-        .background-overlay::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
-            backdrop-filter: blur(5px);
-        }
-
-        /* Modal Animation */
-        .modal {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
-
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
     </style>
 </head>
 

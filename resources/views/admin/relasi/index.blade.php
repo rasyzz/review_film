@@ -51,7 +51,7 @@
                             <td class="py-4 px-6">{{ $title }}</td>
                             <td class="py-4 px-6">{{ $items->pluck('genre.title')->implode(', ') }}</td>
                             <td class="py-4 px-6 flex justify-center space-x-3">
-                                @if ($items->isNotEmpty())
+                                @if ($items->isNotEmpty() && $items->first()->film)
                                     <a href="{{ route('relasi.edit', ['id' => $items->first()->film->id_film]) }}"
                                         class="text-yellow-500 hover:text-yellow-700" title="Edit">
                                         <i class="fa fa-edit"></i>
