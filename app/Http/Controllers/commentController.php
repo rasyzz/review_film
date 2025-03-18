@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
+use App\Models\comment;
 use App\Models\film;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class commentController extends Controller
         ]);
 
         // Periksa apakah user sudah berkomentar untuk film ini
-        $existingComment = Comment::where('id_user', Auth::id())
+        $existingComment = comment::where('id_user', Auth::id())
             ->where('id_film', $film->id_film)
             ->first();
 
@@ -32,7 +32,7 @@ class commentController extends Controller
         }
 
         // Simpan komentar baru
-        Comment::create([
+        comment::create([
             'rating'  => $validated['rating'],
             'comment' => $validated['komentar'],
             'id_user' => Auth::id(),
@@ -64,7 +64,7 @@ class commentController extends Controller
         return redirect()->back()->with('success', 'Komentar berhasil diperbarui.');
     }
 
-    public function destroy(Comment $comment)
+    public function destroy(comment $comment)
     {
         // Pastikan user telah login dan hanya pemilik komentar yang dapat menghapus komentar ini
         if (!Auth::check() || Auth::id() !== $comment->id_user) {
