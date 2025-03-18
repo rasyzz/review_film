@@ -13,13 +13,11 @@ use App\Http\Controllers\subscriber\homeSubscriberController;
 use App\Http\Controllers\anonymous\homeAnonymousController;
 use App\Http\Controllers\anonymous\searchController;
 use App\Http\Controllers\anonymous\searchgenreController;
-use App\Http\Controllers\author\a_commentController;
 use App\Http\Controllers\author\a_FilmController;
 use App\Http\Controllers\author\author_searchController;
 use App\Http\Controllers\author\author_searchgenreController;
 use App\Http\Controllers\subscriber\subs_searchController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\subscriber\commentController;
 use App\Http\Controllers\subscriber\subs_searchgenreController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\commentController as ControllersCommentController;
@@ -49,14 +47,14 @@ Route::get('/films/{film}', [filmController::class, 'comment'])->name('comment.s
 Route::post('/films/{film}/comments', [ControllersCommentController::class, 'store'])
     ->name('comments.store')
     ->middleware('auth');
-Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+Route::delete('/comments/{comment}', [ControllersCommentController::class, 'destroy'])->name('comments.destroy');
 Route::put('/comments/{comment}', [ControllersCommentController::class, 'update'])->name('comments.update');
 
 //anonymous
 Route::get('/', [homeAnonymousController::class, 'login'])->name('anonymous');
 // Route::get('home/', [homeAnonymousController::class, 'index'])->name('anonymous.home');
 Route::get('home/detailfilm/{id_film}', [homeAnonymousController::class, 'show'])->name('detail.film');
-Route::get('film-genre/{id}', [searchgenreController::class, 'index'])->name('film-genre');
+Route::get('film/{id}', [searchgenreController::class, 'index'])->name('film-genre');
 Route::get('search', [searchController::class, 'search'])->name('search');
 Route::get('anonymous/search', [searchController::class, 'search'])->name('anonymous.film-search');
 Route::get('Movies', [homeAnonymousController::class, 'movies'])->name('movies');

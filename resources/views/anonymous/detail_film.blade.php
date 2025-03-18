@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <title>{{ $film->title }} - Show</title>
+    <title>Detail:{{ $film->title }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <style>
         .container {
             display: flex;
