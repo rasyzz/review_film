@@ -44,6 +44,7 @@
                         <th class="py-3 px-6 text-left">Title</th>
                         <th class="py-3 px-6 text-left">Tahun Rilis</th>
                         <th class="py-3 px-6 text-left">Sutradara</th>
+                        <th class="py-3 px-6 text-left">Genre</th>
                         <th class="py-3 px-6 text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -60,6 +61,7 @@
                             <td class="py-4 px-6">{{ $item->title }}</td>
                             <td class="py-4 px-6">{{ $item->release_year }}</td>
                             <td class="py-4 px-6">{{ $item->creator }}</td>
+                            <td class="py-4 px-6">#</td>
                             <td class="py-4 px-6 flex justify-center items-center space-x-3">
                                 <a href="{{ route('film.show', $item->id_film) }}"
                                     class="text-blue-500 hover:text-blue-700" title="Show">
@@ -170,7 +172,6 @@
             // In a real app, you might want to show this toast after a successful AJAX response
             showSuccessToast();
         }
-
     </script>
 
     <script>

@@ -71,14 +71,16 @@
                                     class="text-yellow-500 hover:text-yellow-700" title="Edit">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                {{-- <form action="{{ route('film.destroy', $item->id_film) }}" method="POST"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                                <button type="button" onclick="showDeleteModal(this)"
+                                    class="text-red-500 hover:text-red-700" title="Hapus"
+                                    data-id="{{ $item->id_film }}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+
+                                <form id="deleteForm" method="POST" action="" class="hidden">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-700" title="Hapus">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form> --}}
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -86,6 +88,91 @@
             </table>
         </div>
     </div>
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal"
+        class="fixed inset-0 bg-transparent flex items-center justify-center z-50 hidden transition-opacity duration-300">
+        <div class="bg-blue-900 backdrop-blur-md rounded-lg shadow-xl w-full max-w-md mx-4 transform transition-transform duration-300 scale-95 opacity-0 border border-gray-200"
+            id="deleteModalContent">
+            <div class="p-6">
+
+                <div class="mb-5">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-red-100 p-2 rounded-full mr-3">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                                </path>
+                            </svg>
+                        </div>
+                        <p class="text-white">Apakah Anda yakin ingin hapus data ini?</p>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button onclick="closeDeleteModal()"
+                        class="px-4 py-2 border border-gray-300 rounded-lg text-white hover:bg-gray-50 hover:text-gray-700 transition-colors">
+                        Tidak
+                    </button>
+                    <button onclick="confirmDelete()"
+                        class="px-4 py-2 bg-red-600 rounded-lg text-white hover:bg-red-700 transition-colors flex items-center">
+                        Ya, Hapus
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript for Modal and Toast Functionality -->
+    <script>
+        // Global variable to store the current item ID
+        let currentItemId = null;
+
+        function showDeleteModal(button) {
+            // Get the ID from data attribute
+            currentItemId = button.getAttribute('data-id');
+
+            const modal = document.getElementById('deleteConfirmModal');
+            const modalContent = document.getElementById('deleteModalContent');
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('bg-black', 'bg-opacity-50');
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeDeleteModal() {
+            const modal = document.getElementById('deleteConfirmModal');
+            const modalContent = document.getElementById('deleteModalContent');
+
+            modal.classList.remove('bg-black', 'bg-opacity-50');
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function confirmDelete() {
+            // Set the form action with the current item ID
+            const deleteForm = document.getElementById('deleteForm');
+            deleteForm.action = "{{ route('a.film.destroy', '') }}/" + currentItemId;
+
+            // Submit the form
+            deleteForm.submit();
+
+            // Close the modal
+            closeDeleteModal();
+
+            // Show success toast notification after form submission
+            // This will appear immediately, which assumes the form submission is successful
+            // In a real app, you might want to show this toast after a successful AJAX response
+            showSuccessToast();
+        }
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Ambil elemen input pencarian
@@ -164,4 +251,5 @@
         }
     </script>
 @endif
+
 </html>

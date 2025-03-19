@@ -17,7 +17,7 @@
             <h1 class="text-4xl font-extrabold text-gray-900 uppercase tracking-wide">TAMBAH DATA FILM</h1>
         </div>
 
-        <form action="{{ route('film.store') }}" method="POST" enctype="multipart/form-data"
+        <form action="{{ route('a.film.store') }}" method="POST" enctype="multipart/form-data"
             class="overflow-x-auto px-6">
             @csrf
             <div class="overflow-x-auto px-6 bg-light p-4 rounded shadow-sm border border-gray-300">

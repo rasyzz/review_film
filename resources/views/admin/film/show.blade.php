@@ -69,6 +69,9 @@
                             <h1 class="text-4xl font-bold mb-6">{{ $film->title }}</h1>
                             <div class="space-y-4">
                                 <p class="text-lg">
+                                    <span class="font-semibold">Genre:</span>
+                                </p>
+                                <p class="text-lg">
                                     <span class="font-semibold">Description:</span>
                                     <span class="block mt-1">{{ $film->description }}</span>
                                 </p>
@@ -84,7 +87,7 @@
                                     <span class="font-semibold">Director:</span>
                                     <span class="block mt-1">{{ $film->creator }}</span>
                                 </p>
-                                
+
                                 <p class="text-lg">
                                     <span class="font-semibold">Trailer:</span>
                                     <span class="block mt-1">
@@ -94,6 +97,9 @@
                                             <i class="fas fa-play mr-2"></i>Watch Trailer
                                         </button>
                                     </span>
+                                </p>
+                                <p class="text-lg">
+                                    <span class="font-semibold">castings:</span>
                                 </p>
 
                             </div>
@@ -107,7 +113,7 @@
                             <i class="fas fa-arrow-left mr-2"></i>Exit
                         </a>
                     </div>
-                    
+
                     <!-- Modal Trailer (Tersembunyi Secara Default) -->
                     <div id="trailerModal"
                         class="hidden fixed inset-0  backdrop-blur-sm justify-center items-center ml-64">

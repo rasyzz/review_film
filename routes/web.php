@@ -14,6 +14,7 @@ use App\Http\Controllers\anonymous\homeAnonymousController;
 use App\Http\Controllers\anonymous\searchController;
 use App\Http\Controllers\anonymous\searchgenreController;
 use App\Http\Controllers\author\a_FilmController;
+use App\Http\Controllers\author\a_relationController;
 use App\Http\Controllers\author\author_searchController;
 use App\Http\Controllers\author\author_searchgenreController;
 use App\Http\Controllers\subscriber\subs_searchController;
@@ -89,8 +90,14 @@ Route::middleware(['auth', 'role:author'])->group(function () {
     Route::get('author/film/edit/{id_film}', [a_FilmController::class, 'edit'])->name('a.film.edit');
     Route::put('author/film/update/{id_film}', [a_FilmController::class, 'update'])->name('a.film.update');
     Route::delete('author/film/destroy/{id_film}', [a_FilmController::class, 'destroy'])->name('a.film.destroy');
+    //relasi
+    Route::get('author/relasi', [a_relationController::class, 'index'])->name('a.relasi.index');
+    Route::get('author/relasi/create', [a_relationController::class, 'create'])->name('a.relasi.create');
+    Route::post('author/relasi/store', [a_relationController::class, 'store'])->name('a.relasi.store');
+    Route::get('author/relasi/edit/{id}', [a_relationController::class, 'edit'])->name('a.relasi.edit');
+    Route::put('author/relasi/update/{id}', [a_relationController::class, 'update'])->name('a.relasi.update');
+    Route::delete('author/relasi/destroy/{id}', [a_relationController::class, 'destroy'])->name('a.relasi.destroy');
 });
-
 
 //admin
 Route::middleware(['auth', 'role:admin'])->group(function () {

@@ -9,69 +9,8 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <title>Detail:{{ $film->title }}</title>
     <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
     <style>
-        .container {
-            display: flex;
-            max-width: 600%;
-        }
-
-
-        .poster {
-            padding: 10px;
-            flex: 1;
-            margin-right: 0px;
-        }
-
-        .poster img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .details {
-            flex: 2;
-            margin-left: 20px;
-        }
-
-        .title {
-            font-size: 2em;
-            font-weight: 700;
-        }
-
-
-
-        .rating {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-        }
-
-        .rating .score {
-            background-color: #1db954;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2em;
-            font-weight: 700;
-            margin-right: 10px;
-        }
-
-        .rating .text {
-            font-size: 1em;
-        }
-
-
-
-        .description {
-            margin-bottom: 20px;
-            font-size: 1em;
-            color: #cccccc;
-        }
-
-
-
         /* Background Overlay */
         .background-overlay {
             background-image: url("{{ asset('storage/' . $film->poster) }}");
@@ -80,29 +19,6 @@
             background-repeat: no-repeat;
             position: relative;
             padding: 7px;
-        }
-
-        .background-overlay::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
-            backdrop-filter: blur(5px);
-        }
-
-        /* Modal Animation */
-        .modal {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
-
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
         }
     </style>
 </head>
@@ -209,23 +125,38 @@
                                 // Calculate average rating and total ratings
                                 $averageRating = $film->comments->avg('rating');
                                 $totalRates = $film->comments->count();
-                                // Round rating for full stars
-                                $roundedRating = round($averageRating);
+
+                                // Store the actual decimal value for partial stars
+                                $ratingDecimal = $averageRating;
                             @endphp
 
                             <div class="rating flex items-center mb-6 md:mb-20">
                                 @for ($i = 1; $i <= 5; $i++)
-                                    <svg class="w-6 h-6 md:w-8 md:h-8 mx-1 {{ $i <= $roundedRating ? 'text-yellow-300' : 'text-gray-300' }}"
-                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                        viewBox="0 0 22 20">
-                                        <path
-                                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                    </svg>
+                                    <div class="relative mx-1">
+                                        <!-- Background star (outline only) -->
+                                        <svg class="w-6 h-6 md:w-8 md:h-8 text-gray-500" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                                            stroke-width="1.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.499z" />
+                                        </svg>
+
+                                        <!-- Foreground star (yellow with transparency) -->
+                                        <div class="absolute inset-0 overflow-hidden"
+                                            style="clip-path: inset(0 {{ 100 - min(100, max(0, ($ratingDecimal - $i + 1) * 100)) }}% 0 0);">
+                                            <svg class="w-6 h-6 md:w-8 md:h-8 text-yellow-400" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                stroke="currentColor" stroke-width="0.5" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.499z" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 @endfor
 
                                 <!-- Average rating and total -->
                                 <span class="ml-2 md:ml-3 text-gray-600 text-sm md:text-lg">
-                                    {{ number_format($averageRating, 1) }}
+                                    {{ number_format($ratingDecimal, 1) }}
                                     ({{ $totalRates }} rates)
                                 </span>
                             </div>
@@ -321,7 +252,7 @@
                         </div>
                         <div class="flex justify-end gap-3">
                             <button onclick="closeLoginModal()"
-                                class="px-4 py-2 border border-gray-300 rounded-lg text-white hover:bg-gray-50 transition-colors">
+                                class="px-4 py-2 border border-gray-300 rounded-lg text-white hover:bg-gray-500 transition-colors">
                                 Batal
                             </button>
                             <a href="/login"

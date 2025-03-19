@@ -12,7 +12,7 @@
 
 <body>
     @include('sidebar-navbar-admin.siidebar')
-    <div class="overflow-x-auto ml-64 mt-10 bg-slate-200">
+    <div class="overflow-x-auto ml-64 mt-10 bg-white">
         <div class="py-8 flex justify-center">
             <h1 class="text-4xl font-extrabold text-gray-900 uppercase tracking-wide">TAMBAH DATA USER</h1>
         </div>
@@ -25,6 +25,11 @@
                     <label class="block text-sm font-bold">Name:</label>
                     <input type="text" name="name" class="w-full border border-black rounded p-2"
                         placeholder="Masukkan nama" required>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-sm font-bold">No Telepon:</label>
+                    <input type="text" name="no_tlp" class="w-full border border-black rounded p-2"
+                        placeholder="Masukkan nomor telepon" required>
                 </div>
 
                 <div class="mb-3">

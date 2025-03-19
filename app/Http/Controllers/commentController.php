@@ -64,11 +64,11 @@ class commentController extends Controller
         return redirect()->back()->with('success', 'Komentar berhasil diperbarui.');
     }
 
-    public function destroy(comment $comment)
+    public function destroy(Comment $comment)
     {
-        // Pastikan user telah login dan hanya pemilik komentar yang dapat menghapus komentar ini
-        if (!Auth::check() || Auth::id() !== $comment->id_user) {
-            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menghapus komentar ini.');
+        // Pastikan user telah login
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'Anda harus login untuk menghapus komentar.');
         }
 
         // Hapus komentar

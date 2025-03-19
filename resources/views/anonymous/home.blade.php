@@ -75,20 +75,70 @@
         <script>
             let slideIndex = 0;
             let autoSlideInterval;
+            let slider;
+            let slides;
+            let totalSlides;
+            let isAnimating = false;
+
+            function setupSlider() {
+                slider = document.querySelector('.slider');
+                slides = document.querySelectorAll('.slide');
+                totalSlides = slides.length;
+
+                // Duplikasi slide pertama di akhir dan slide terakhir di awal
+                // untuk membuat ilusi transisi berputar yang mulus
+                const firstSlideClone = slides[0].cloneNode(true);
+                const lastSlideClone = slides[totalSlides - 1].cloneNode(true);
+
+                slider.appendChild(firstSlideClone);
+                slider.insertBefore(lastSlideClone, slides[0]);
+
+                // Setel posisi awal ke slide pertama (bukan clone)
+                slideIndex = 1;
+                slider.style.transform = `translateX(-${slideIndex * 100}%)`;
+
+                // Hilangkan transisi agar penempatan awal tidak terlihat
+                slider.style.transition = 'none';
+                setTimeout(() => {
+                    slider.style.transition = 'transform 0.5s ease';
+                }, 10);
+            }
 
             function moveSlide(n) {
-                const slides = document.querySelectorAll('.slide');
-                const totalSlides = slides.length;
+                if (isAnimating) return;
+                isAnimating = true;
+
+                // Update jumlah slide setelah penambahan clone
+                slides = document.querySelectorAll('.slide');
+                totalSlides = slides.length;
+
                 slideIndex += n;
-
-                if (slideIndex < 0) {
-                    slideIndex = totalSlides - 1;
-                } else if (slideIndex >= totalSlides) {
-                    slideIndex = 0;
-                }
-
-                const slider = document.querySelector('.slider');
                 slider.style.transform = `translateX(-${slideIndex * 100}%)`;
+
+                // Tunggu animasi selesai
+                setTimeout(() => {
+                    // Jika sudah sampai di clone terakhir, lompat ke slide asli pertama
+                    if (slideIndex >= totalSlides - 1) {
+                        slideIndex = 1;
+                        slider.style.transition = 'none';
+                        slider.style.transform = `translateX(-${slideIndex * 100}%)`;
+                        setTimeout(() => {
+                            slider.style.transition = 'transform 0.5s ease';
+                        }, 10);
+                    }
+
+                    // Jika sudah sampai di clone pertama, lompat ke slide asli terakhir
+                    if (slideIndex <= 0) {
+                        slideIndex = totalSlides - 2;
+                        slider.style.transition = 'none';
+                        slider.style.transform = `translateX(-${slideIndex * 100}%)`;
+                        setTimeout(() => {
+                            slider.style.transition = 'transform 0.5s ease';
+                        }, 10);
+                    }
+
+                    isAnimating = false;
+                }, 500); // Durasi animasi
             }
 
             function autoSlide() {
@@ -119,9 +169,23 @@
                 }
             }
 
+            function pauseSlideOnHover() {
+                const sliderContainer = document.querySelector('.slider-container');
+
+                sliderContainer.addEventListener('mouseenter', () => {
+                    clearInterval(autoSlideInterval);
+                });
+
+                sliderContainer.addEventListener('mouseleave', () => {
+                    autoSlide();
+                });
+            }
+
             document.addEventListener("DOMContentLoaded", () => {
+                setupSlider();
                 autoSlide();
                 updateSliderHeight();
+                pauseSlideOnHover();
                 window.addEventListener('resize', updateSliderHeight);
             });
         </script>

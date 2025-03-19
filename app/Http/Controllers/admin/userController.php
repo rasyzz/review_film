@@ -38,6 +38,7 @@ class userController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'no_tlp' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'role' => 'required|in:admin,author,user',
@@ -45,6 +46,7 @@ class userController extends Controller
 
         User::create([
             'name' => $request->name,
+            'no_tlp' => $request->no_tlp,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,

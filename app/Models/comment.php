@@ -15,11 +15,11 @@ class comment extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(user::class, 'id_user');
     }
 
     public function film()
     {
-        return $this->belongsTo(Film::class, 'id_film');
+        return $this->belongsTo(film::class, 'id_film');
     }
 }

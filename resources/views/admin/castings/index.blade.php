@@ -45,11 +45,12 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 ">
-                    @foreach ($casting as $item)
+                    @foreach ($c as $item)
                         <tr class="hover:bg-gray-100">
                             <td class="py-4 px-6">{{ $item->stage_name }}</td>
                             <td class="py-4 px-6">{{ $item->real_name }}</td>
-                            <td class="py-4 px-6">{{ $item->film->title }}</td>
+                            <td class="py-4 px-6">{{ optional($item->film)->title ?? 'N/A' }}</td>
+
                             <td class="py-4 px-6 flex justify-center items-center space-x-3">
                                 <a href="{{ route('castings.edit', $item->id_castings) }}"
                                     class="text-yellow-500 hover:text-yellow-700" title="Edit">

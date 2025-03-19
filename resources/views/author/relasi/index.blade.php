@@ -8,31 +8,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
-    <title>user</title>
+    <title>Genre</title>
 </head>
 
 <body class="bg-slate-200">
-    @include('sidebar-navbar-admin.siidebar')
+    @include('navbar-author.sidebar')
     <div class="overflow-x-auto ml-64 mt-10 bg-slate-200">
         <div class="py-8 flex justify-center">
             <h1 class="text-4xl font-extrabold text-gray-900 uppercase tracking-wide transition-colors duration-300">
-                DATA USER
+                Genre
             </h1>
         </div>
 
         <div class="flex items-center mb-6 px-6 p-3 space-x-4">
             <form action="/search" method="GET"
                 class="flex items-center w-full max-w-sm bg-white rounded-lg p-1 shadow-sm border border-gray-300">
-                <input type="text" name="query" placeholder="Cari pengguna..."
+                <input type="text" name="query" placeholder="Cari movies..."
                     class="flex-grow bg-transparent outline-none px-3 text-gray-700 placeholder-gray-400 text-sm">
                 <button type="submit"
                     class="bg-gray-800 text-white px-3 py-1 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300 flex items-center text-sm">
                     <i class="fas fa-search mr-2"></i> Cari
                 </button>
             </form>
-            <a href="{{ route('user.create') }}"
+            <a href="{{ route('a.relasi.create') }}"
                 class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 flex items-center shadow-md text-sm">
-                <i class="fas fa-plus-circle mr-2"></i> Tambah User
+                <i class="fas fa-plus-circle mr-2"></i> Tambah Relasi
             </a>
         </div>
 
@@ -40,38 +40,34 @@
             <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden mb-10">
                 <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th class="py-3 px-6 text-left">Id</th>
-                        <th class="py-3 px-6 text-left">Nama</th>
-                        <th class="py-3 px-6 text-left">Telepon</th>
-                        <th class="py-3 px-6 text-left">Email</th>
-                        <th class="py-3 px-6 text-left">Role</th>
+                        <th class="py-3 px-6 text-left">Film</th>
+                        <th class="py-3 px-6 text-left">Genre</th>
                         <th class="py-3 px-6 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    @foreach ($users as $item)
+                    @foreach ($gl as $title => $items)
                         <tr class="hover:bg-gray-100">
-                            <td class="py-4 px-6">{{ $item->id }}</td>
-                            <td class="py-4 px-6">{{ $item->name }}</td>
-                            <td class="py-4 px-6">{{ $item->no_tlp }}</td>
-                            <td class="py-4 px-6">{{ $item->email }}</td>
-                            <td class="py-4 px-6">{{ $item->role }}</td>
+                            <td class="py-4 px-6">{{ $title }}</td>
+                            <td class="py-4 px-6">{{ $items->pluck('genre.title')->implode(', ') }}</td>
                             <td class="py-4 px-6 flex justify-center space-x-3">
-                                <a href="{{ route('user.edit', $item->id) }}"
-                                    class="text-yellow-500 hover:text-yellow-700" title="Edit">
-                                    <i class="fa fa-edit"></i>
-                                </a>
+                                @if ($items->isNotEmpty() && $items->first()->film)
+                                    <a href="{{ route('a.relasi.edit', ['id' => $items->first()->film->id_film]) }}"
+                                        class="text-yellow-500 hover:text-yellow-700" title="Edit">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
 
-                                <button type="button" onclick="showDeleteModal(this)"
-                                    class="text-red-500 hover:text-red-700" title="Hapus"
-                                    data-id="{{ $item->id }}">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                    <button type="button" onclick="showDeleteModal(this)"
+                                        class="text-red-500 hover:text-red-700" title="Hapus"
+                                        data-id="{{ $items->first()->id }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
 
-                                <form id="deleteForm" method="POST" action="" class="hidden">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
+                                    <form id="deleteForm" method="POST" action="" class="hidden">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -149,7 +145,7 @@
         function confirmDelete() {
             // Set the form action with the current item ID
             const deleteForm = document.getElementById('deleteForm');
-            deleteForm.action = "{{ route('user.destroy', '') }}/" + currentItemId;
+            deleteForm.action = "{{ route('a.relasi.destroy', '') }}/" + currentItemId;
 
             // Submit the form
             deleteForm.submit();

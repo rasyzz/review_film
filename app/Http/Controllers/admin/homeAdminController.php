@@ -20,6 +20,7 @@ class homeAdminController extends Controller
         $totalGenres = Genre::count();
         $totalCastings = Castings::count();
         $recentFilms = Film::latest()->take(5)->get();
+       
         $comments = Comment::orderBy('rating', 'desc')->get();
 
         return view('admin.dashboard', compact(
@@ -39,12 +40,15 @@ class homeAdminController extends Controller
         $f1 = film::latest()    // Mengurutkan berdasarkan created_at DESC
             ->take(3)     // Mengambil 3 data teratas
             ->get();       // Eksekusi query
+        $f2 = film::latest()    // Mengurutkan berdasarkan created_at DESC
+            ->take(5)     // Mengambil 3 data teratas
+            ->get();       // Eksekusi query
         $genre = genre_relation::select('genre_relations.id_genre', 'genres.title')
             ->join('genres', 'genre_relations.id_genre', '=', 'genres.id_genre')
             ->groupBy('genre_relations.id_genre', 'genres.title')
             ->get();
         $films = film::all(); // Pakai nama variabel jamak agar tidak membingungkan
-        return view('admin.home', compact('genre', 'films', 'f1'));
+        return view('admin.home', compact('genre', 'films', 'f1','f2'));
     }
 
     public function movies()

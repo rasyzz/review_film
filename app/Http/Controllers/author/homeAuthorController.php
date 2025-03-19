@@ -11,6 +11,7 @@ class homeAuthorController extends Controller
 {
     public function dashboard() {
         $totalFilms = Film::count();
+        $totalrelasi = genre_relation ::count();
         $recentFilms = Film::latest()->take(5)->get();
         return view('author.dashboard', compact('totalFilms','recentFilms'));
     }

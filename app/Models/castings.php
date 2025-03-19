@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\film;
 
-class Castings extends Model
+class castings extends Model
 {
     use HasFactory;
 

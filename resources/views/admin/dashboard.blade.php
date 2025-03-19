@@ -113,9 +113,9 @@
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-semibold text-gray-800">Comments</h3>
             </div>
-            <div class="overflow-x-auto">
+            <div class="overflow-y-auto max-h-96"> <!-- Menambahkan max-height dan overflow-y-auto -->
                 <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                    <thead class="bg-gray-50 sticky top-0"> <!-- Menambahkan sticky top-0 agar header tetap terlihat -->
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
@@ -135,7 +135,12 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($comments as $c)
+                        @php
+                            // Membatasi data yang ditampilkan menjadi 10
+                            $displayComments = $comments->take(10);
+                        @endphp
+
+                        @foreach ($displayComments as $c)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-black">
@@ -144,7 +149,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900">
-                                        {{ $c->film->title }}
+                                        {{ optional($c->film)->title ?? 'N/A' }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -166,7 +171,8 @@
 
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <button type="button" onclick="showDeleteModal(this)"
-                                        class="text-red-500 hover:text-red-700" title="Hapus" data-id="#">
+                                        class="text-red-500 hover:text-red-700" title="Hapus"
+                                        data-id="{{ $c->id_comments }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
 
@@ -184,6 +190,51 @@
 
     </div>
 </body>
+<!-- Success Toast Notification - Hidden by default -->
+@if (session('success'))
+    <div id="successToast"
+        class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-x-full flex items-center z-50 hidden">
+        <div class="bg-white bg-opacity-25 p-1 rounded-full mr-3">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <span>{{ session('success') }}</span> <!-- Menampilkan pesan sukses dari session -->
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            showSuccessToast();
+        });
+
+        function showSuccessToast() {
+            const toast = document.getElementById('successToast');
+
+            // Remove hidden class first to make the element visible
+            toast.classList.remove('hidden');
+
+            // Small delay to ensure transitions work properly after removing hidden
+            setTimeout(() => {
+                // Trigger the slide-in animation
+                toast.classList.remove('translate-x-full');
+                toast.classList.add('translate-x-0');
+            }, 10);
+
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                // Start the slide-out animation
+                toast.classList.remove('translate-x-0');
+                toast.classList.add('translate-x-full');
+
+                // Hide completely after animation completes
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300); // This duration should match your transition duration
+            }, 3000);
+        }
+    </script>
+@endif
+
 <!-- Delete Confirmation Modal -->
 <div id="deleteConfirmModal"
     class="fixed inset-0 bg-transparent flex items-center justify-center z-50 hidden transition-opacity duration-300">
@@ -254,7 +305,7 @@
     function confirmDelete() {
         // Set the form action with the current item ID
         const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = "#/" + currentItemId;
+        deleteForm.action = "{{ route('comments.destroy', '') }}/" + currentItemId;
 
         // Submit the form
         deleteForm.submit();

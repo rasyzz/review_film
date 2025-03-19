@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Castings;
+use App\Models\castings;
 use App\Models\film;
 use Illuminate\Http\Request;
 
@@ -14,8 +14,8 @@ class castingsController extends Controller
      */
     public function index()
     {
-        $casting = Castings::with('film')->get();
-        return view('admin.castings.index' , compact( 'casting'));
+        $c = castings::with('film')->get();
+        return view('admin.castings.index' , compact( 'c'));
     }
 
     /**
