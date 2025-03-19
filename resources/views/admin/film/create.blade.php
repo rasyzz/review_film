@@ -75,6 +75,12 @@
                     <input type="text" name="creator" class="w-full border border-black rounded p-2" placeholder="Masukkan nama creator" required>
                 </div>
 
+                <!-- kategoti umur -->
+                <div class="mb-3">
+                    <label class="block text-sm font-bold"> Kategori umur:</label>
+                    <input type="text" name="kategori_umur" class="w-full border border-black rounded p-2" placeholder="Masukkan nama jawaban" >
+                </div>
+
                 <!-- Trailer -->
                 <div class="mb-3">
                     <label class="block text-sm font-bold">Trailer:</label>

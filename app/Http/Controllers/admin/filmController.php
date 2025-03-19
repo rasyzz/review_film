@@ -4,6 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Film;
+use App\Models\Genre;
+use App\Models\genre_relation;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -12,12 +14,13 @@ class FilmController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $films = Film::all();
-        return view('admin.film.index', compact('films'));
+        
+        $f = Film::with('genres')->get(); // Ambil film beserta genre
+        return view('admin.film.index', compact('f'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -38,6 +41,7 @@ class FilmController extends Controller
             'duration' => 'required|integer',
             'rating' => 'required|integer|min:1|max:10',
             'creator' => 'required|string',
+            'kategori_umur' => 'required|string',
             'description' => 'required|string',
             'trailer' => 'nullable|mimes:mp4,mov,avi|max:50000', // Max 50MB
         ]);
@@ -65,6 +69,7 @@ class FilmController extends Controller
             'duration' => $request->duration,
             'rating' => $request->rating,
             'creator' => $request->creator,
+            'kategori_umur' => $request->kategori_umur,
             'trailer' => $trailerPath,
         ]);
 
@@ -75,10 +80,17 @@ class FilmController extends Controller
     /**
      * Display the specified resource.
      */
+    // public function show($id_film)
+    // {
+    //     $film = Film::findOrFail($id_film);
+    //     return view('admin.film.show', compact('film'));
+    // }
     public function show($id_film)
     {
+        $f1 = Film::with('genres')->findOrFail($id_film);
+        $cast = Film::with('castings')->findOrFail($id_film);
         $film = Film::findOrFail($id_film);
-        return view('admin.film.show', compact('film'));
+        return view('admin.film.show1', compact('film', 'f1', 'cast'));
     }
 
 
@@ -111,6 +123,7 @@ class FilmController extends Controller
             'duration'      => 'required|integer',
             'rating'        => 'required|integer|min:1|max:10',
             'creator'       => 'required|string',
+            'kategori_umur' => 'nullable|string',
             'trailer'       => 'nullable|mimes:mp4,mov,avi|max:10000',
         ]);
 
@@ -143,6 +156,7 @@ class FilmController extends Controller
         $film->duration = $request->duration;
         $film->rating = $request->rating;
         $film->creator = $request->creator;
+        $film->kategori_umur = $request->kategori_umur;
 
         $film->save();
 

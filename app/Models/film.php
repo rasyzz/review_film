@@ -13,7 +13,7 @@ class film extends Model
 
     protected $table = 'films';
     protected $primaryKey = 'id_film';
-    protected $fillable = ['title', 'poster', 'description', 'release_year', 'duration', 'rating', 'creator', 'trailer'];
+    protected $fillable = ['title', 'poster', 'description', 'release_year', 'duration', 'rating', 'creator','kategori_umur', 'trailer'];
 
     public function castings()
     {

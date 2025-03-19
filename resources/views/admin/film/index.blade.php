@@ -7,7 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
     <title>Data Film</title>
 </head>
 
@@ -30,12 +35,14 @@
                     <i class="fas fa-search mr-2"></i> Cari
                 </button>
             </form>
+
             <a href="{{ route('film.create') }}"
                 class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 flex items-center shadow-md text-sm">
                 <i class="fas fa-plus-circle mr-2"></i> Tambah Film
             </a>
         </div>
 
+        {{-- table --}}
         <div class="overflow-x-auto px-6">
             <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden mb-10">
                 <thead class="bg-gray-800 text-white">
@@ -45,11 +52,12 @@
                         <th class="py-3 px-6 text-left">Tahun Rilis</th>
                         <th class="py-3 px-6 text-left">Sutradara</th>
                         <th class="py-3 px-6 text-left">Genre</th>
+                        <th class="py-3 px-6 text-left"> Kategori Umur</th>
                         <th class="py-3 px-6 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    @foreach ($films as $item)
+                    @foreach ($f as $item)
                         <tr class="hover:bg-gray-100">
                             <td class="py-4 px-6">
                                 @if ($item->poster)
@@ -61,7 +69,14 @@
                             <td class="py-4 px-6">{{ $item->title }}</td>
                             <td class="py-4 px-6">{{ $item->release_year }}</td>
                             <td class="py-4 px-6">{{ $item->creator }}</td>
-                            <td class="py-4 px-6">#</td>
+                            <td class="py-4 px-6">
+                                @if ($item->genres->isNotEmpty())
+                                    {{ $item->genres->pluck('title')->join(', ') }}
+                                @else
+                                    <span>-</span>
+                                @endif
+                            </td>
+                            <td class="py-4 px-6">{{ $item->kategori_umur }}</td>
                             <td class="py-4 px-6 flex justify-center items-center space-x-3">
                                 <a href="{{ route('film.show', $item->id_film) }}"
                                     class="text-blue-500 hover:text-blue-700" title="Show">
@@ -99,7 +114,8 @@
                 <div class="mb-5">
                     <div class="flex items-center mb-4">
                         <div class="bg-red-100 p-2 rounded-full mr-3">
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
                                 </path>

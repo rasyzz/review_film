@@ -71,6 +71,17 @@
                 </div>
 
                 <div class="mb-3">
+                    <label class="block text-sm font-bold">Kategori umur:</label>
+                    <input type="number" name="kategori_umur" class="w-full border border-black rounded p-2"
+                        placeholder="Masukkan kategori umur" value="{{ old('kategori_umur', $film->kategori_umur) }}"
+                        required>
+
+                    @error('kategori_umur')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label class="block text-sm font-bold">Trailer:</label>
                     <input type="file" name="trailer" class="w-full border border-black rounded p-2">
 
