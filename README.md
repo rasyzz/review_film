@@ -21,6 +21,80 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## Installation
+
+To set up a new Laravel project, follow these steps:
+
+### 1. Install Composer
+Ensure you have [Composer](https://getcomposer.org/) installed on your system.
+
+### 2. Install Laravel
+Run the following command to install Laravel globally via Composer:
+
+```sh
+composer global require laravel/installer
+```
+
+### 3. Create a New Laravel Project
+To create a new Laravel project, use the command:
+
+```sh
+laravel new project-name
+```
+
+Or if you prefer using Composer:
+
+```sh
+composer create-project --prefer-dist laravel/laravel project-name
+```
+
+### 4. Navigate to the Project Directory
+Move into your newly created project folder:
+
+```sh
+cd project-name
+```
+
+### 5. Set Up Environment File
+Copy the `.env.example` file and rename it to `.env`:
+
+```sh
+cp .env.example .env
+```
+
+Then, generate the application key:
+
+```sh
+php artisan key:generate
+```
+
+### 6. Configure Database
+Edit the `.env` file to set up your database connection:
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
+```
+
+Run the migration command to set up database tables:
+
+```sh
+php artisan migrate
+```
+
+### 7. Serve the Application
+Start the Laravel development server with:
+
+```sh
+php artisan serve
+```
+
+Your Laravel application should now be accessible at `http://127.0.0.1:8000`.
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
@@ -64,3 +138,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
