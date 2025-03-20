@@ -40,9 +40,12 @@ class homeAnonymousController extends Controller
             ->get();
 
         $films = film::all();
+        $f2 = film::latest()    // Mengurutkan berdasarkan created_at DESC
+            ->take(5)     // Mengambil 3 data teratas
+            ->get(); 
 
         // jika belum login, tampilkan halaman default untuk user anonymous
-        return view('anonymous.home', compact('genre', 'films', 'f1'));
+        return view('anonymous.home', compact('genre', 'films', 'f1','f2'));
     }
 
     /**
@@ -60,8 +63,11 @@ class homeAnonymousController extends Controller
             ->get();
 
         $films = film::with('comments')->get();
+        $f2 = film::latest()    // Mengurutkan berdasarkan created_at DESC
+            ->take(5)     // Mengambil 3 data teratas
+            ->get();  
        
-        return view('anonymous.home', compact('genre', 'films', 'f1'));
+        return view('anonymous.home', compact('genre', 'films', 'f1','f2'));
     }
 
     public function movies()

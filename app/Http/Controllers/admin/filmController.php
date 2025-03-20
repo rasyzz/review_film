@@ -16,11 +16,48 @@ class FilmController extends Controller
      */
     public function index(Request $request)
     {
+        // Start with a base query
+        $query = Film::with('genres');
         
-        $f = Film::with('genres')->get(); // Ambil film beserta genre
-        return view('admin.film.index', compact('f'));
+        // Apply search filter if provided
+        if ($request->has('query') && !empty($request->query)) {
+            $searchTerm = $request->query;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('title', 'LIKE', "%{$searchTerm}%")
+                  ->orWhere('creator', 'LIKE', "%{$searchTerm}%")
+                  ->orWhere('description', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+        
+        // Apply genre filter if provided
+        if ($request->has('genre') && !empty($request->genre)) {
+            $genreId = $request->genre;
+            $query->whereHas('genres', function($q) use ($genreId) {
+                $q->where('genres.id_genre', $genreId);
+            });
+        }
+        
+        // Apply year filter if provided
+        if ($request->has('year') && !empty($request->year)) {
+            $query->where('release_year', $request->year);
+        }
+        
+        // Get the filtered films
+        $f = $query->get();
+        
+        // Ensure we're getting all genres for the dropdown
+        $genres = Genre::orderBy('title')->get();
+        
+        // Get all unique years for the year filter
+        $years = Film::select('release_year')
+                    ->distinct()
+                    ->orderBy('release_year', 'desc')
+                    ->pluck('release_year')
+                    ->toArray();
+        
+        return view('admin.film.index', compact('f', 'genres', 'years'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */

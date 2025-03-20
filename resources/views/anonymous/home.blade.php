@@ -199,11 +199,8 @@
         </div>
         <div
             class="terbaru bg-gray-900 p-7 md:p-7 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-7 justify-items-center">
-            @php
-                $newestFilms = $films->sortByDesc('release_year')->take(5);
-            @endphp
 
-            @foreach ($newestFilms as $item)
+            @foreach ($f2 as $item)
                 <div class="card relative w-full rounded-lg overflow-hidden">
                     <div class="card-content-wrapper">
                         @if ($item->poster)
